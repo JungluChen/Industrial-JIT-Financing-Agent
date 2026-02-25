@@ -344,7 +344,7 @@ def st_mermaid_fixed(code):
         mermaid.initialize({{ startOnLoad: true, theme: 'default', securityLevel: 'loose' }});
     </script>
     """
-    components.html(html_code, height=500)
+    components.html(html_code, height=225)
 # Footer/Tutorial Docs
 
 st.video("video.mp4")
