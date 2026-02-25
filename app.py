@@ -344,7 +344,7 @@ def st_mermaid_fixed(code):
         st.code(code, language="mermaid")
 # Footer/Tutorial Docs
 
-st.video("Video/video.mp4")
+st.video("video.mp4")
 
 with st.expander("📚 Detailed Workflow & Tutorial", expanded=False):
     st.markdown("""
