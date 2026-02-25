@@ -1,0 +1,5 @@
+PO_Number,Supplier,Required_Date,Amount,Available_Balance,Status
+PO-1001,Acme Corp,2026-03-01,0.0,50000.0,Pending
+PO-1002,Global Industries,2026-03-05,25000.0,25000.0,Funded
+PO-1003,TechFlow Systems,2026-03-10,120000.0,120000.0,Funded
+PO-1004,Nexus Dynamics,2026-03-15,35000.0,35000.0,Pending
