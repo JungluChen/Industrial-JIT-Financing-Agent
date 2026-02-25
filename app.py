@@ -355,7 +355,7 @@ def st_mermaid_fixed(code):
     components.html(html_code, height=225)
 # Footer/Tutorial Docs
 
-st.video("out_apple_style.mp4")
+st.video("video.mp4")
 
 with st.expander("📚 Detailed Workflow & Tutorial", expanded=False):
     st.markdown("""
