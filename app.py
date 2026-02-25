@@ -335,13 +335,16 @@ if submit and prompt:
 import streamlit.components.v1 as components
 
 def st_mermaid_fixed(code):
-    # 使用 streamlit_mermaid 庫來渲染 Mermaid 圖表
-    # 這比手動 HTML 注入更穩定，特別是在雲端環境中
-    try:
-        st_mermaid(code, height=500)
-    except Exception as e:
-        st.error(f"Mermaid chart failed to render: {e}")
-        st.code(code, language="mermaid")
+    html_code = f"""
+    <div class="mermaid" style="display: flex; justify-content: center;">
+        {code.strip()}
+    </div>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({{ startOnLoad: true, theme: 'default', securityLevel: 'loose' }});
+    </script>
+    """
+    components.html(html_code, height=500)
 # Footer/Tutorial Docs
 
 st.video("video.mp4")
