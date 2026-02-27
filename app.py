@@ -7,7 +7,14 @@ import random
 import os
 import base64
 import streamlit.components.v1 as components
-
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 def st_mermaid(code, theme="default"):
     mermaid_code = f"%%{{init: {{'theme': '{theme}'}}}}%%\n{code}"
     encoded = base64.b64encode(mermaid_code.encode('utf-8')).decode('utf-8')
@@ -455,6 +462,7 @@ if submit and prompt:
                 
                 st.markdown(reply)
                 st.session_state.chat_messages.append({"role": "assistant", "content": reply})
+
 st.subheader("🎥 6. Video")
 import os
 video_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "video.mp4")
