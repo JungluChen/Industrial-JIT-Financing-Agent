@@ -15,6 +15,18 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
+hide_all_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            /* 隱藏右下角的 Manage app 按鈕 */
+            .stAppDeployButton {display: none;}
+            /* 針對較舊版本或特定佈局的額外選擇器 */
+            div[data-testid="stStatusWidget"] {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_all_style, unsafe_allow_html=True)
 def st_mermaid(code, theme="default"):
     mermaid_code = f"%%{{init: {{'theme': '{theme}'}}}}%%\n{code}"
     encoded = base64.b64encode(mermaid_code.encode('utf-8')).decode('utf-8')
