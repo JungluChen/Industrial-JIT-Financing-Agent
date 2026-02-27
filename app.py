@@ -15,18 +15,39 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
-hide_all_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            header {visibility: hidden;}
-            footer {visibility: hidden;}
-            /* 隱藏右下角的 Manage app 按鈕 */
-            .stAppDeployButton {display: none;}
-            /* 針對較舊版本或特定佈局的額外選擇器 */
-            div[data-testid="stStatusWidget"] {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_all_style, unsafe_allow_html=True)
+import streamlit as st
+
+# 針對右下角所有懸浮元件的強制隱藏
+hide_streamlit_cloud_elements = """
+    <style>
+    /* 1. 隱藏右上角選單與工具欄 */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* 2. 隱藏頁尾 "Made with Streamlit" */
+    footer {visibility: hidden;}
+
+    /* 3. 隱藏右下角 "Manage app" 黑色按鈕 */
+    .stAppDeployButton {
+        display: none !important;
+    }
+
+    /* 4. 隱藏右下角 "Hosted with Streamlit" 紅色標籤 (針對 Cloud 注入) */
+    div[data-testid="stStatusWidget"] {
+        visibility: hidden !important;
+        display: none !important;
+    }
+
+    /* 5. 萬用：針對任何在底部右側出現的懸浮容器 */
+    [data-testid="stConnectionStatus"],
+    .st-emotion-cache-1wb5477, 
+    .st-emotion-cache-6qob1r {
+        display: none !important;
+    }
+    </style>
+    """
+
+st.markdown(hide_streamlit_cloud_elements, unsafe_allow_html=True)
 def st_mermaid(code, theme="default"):
     mermaid_code = f"%%{{init: {{'theme': '{theme}'}}}}%%\n{code}"
     encoded = base64.b64encode(mermaid_code.encode('utf-8')).decode('utf-8')
