@@ -24,22 +24,22 @@ st.set_page_config(
 # -----------------------------------------------------------------------------
 
 # Sidebar Theme Toggle
-with st.sidebar:
-    st.title("⚙️ Settings")
-    if 'theme_mode' not in st.session_state:
-        st.session_state.theme_mode = 'Light'
+# with st.sidebar:
+#     st.title("⚙️ Settings")
+#     if 'theme_mode' not in st.session_state:
+#         st.session_state.theme_mode = 'Light'
         
-    is_dark = st.toggle("🌙 Dark Mode", value=(st.session_state.theme_mode == 'Dark'))
-    new_mode = 'Dark' if is_dark else 'Light'
+#     is_dark = st.toggle("🌙 Dark Mode", value=(st.session_state.theme_mode == 'Dark'))
+#     new_mode = 'Dark' if is_dark else 'Light'
     
-    if new_mode != st.session_state.theme_mode:
-        st.session_state.theme_mode = new_mode
-        # Update Streamlit config to natively switch themes
-        os.makedirs('.streamlit', exist_ok=True)
-        with open('.streamlit/config.toml', 'w') as f:
-            f.write(f'[theme]\nbase="{new_mode.lower()}"\nprimaryColor="#2980b9"\n')
-        st.rerun()
-    st.divider()
+#     if new_mode != st.session_state.theme_mode:
+#         st.session_state.theme_mode = new_mode
+#         # Update Streamlit config to natively switch themes
+#         os.makedirs('.streamlit', exist_ok=True)
+#         with open('.streamlit/config.toml', 'w') as f:
+#             f.write(f'[theme]\nbase="{new_mode.lower()}"\nprimaryColor="#2980b9"\n')
+#         st.rerun()
+#     st.divider()
 
 mermaid_theme = "dark" if st.session_state.theme_mode == 'Dark' else "default"
 
