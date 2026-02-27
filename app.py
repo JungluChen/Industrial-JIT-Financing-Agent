@@ -5,6 +5,8 @@ import time
 import json
 import random
 from streamlit_mermaid import st_mermaid
+import os
+
 # App Configuration
 st.set_page_config(
     page_title="Industrial JIT Financing Agent",
@@ -17,32 +19,50 @@ st.set_page_config(
         "About": None
     }
 )
-# 设置默认主题为浅色模式
-st._config.set_option("theme.base", "light")
-# Custom CSS for styling
-st.markdown("""
+# -----------------------------------------------------------------------------
+# 1. State Management
+# -----------------------------------------------------------------------------
+
+# Sidebar Theme Toggle
+with st.sidebar:
+    st.title("⚙️ Settings")
+    if 'theme_mode' not in st.session_state:
+        st.session_state.theme_mode = 'Light'
+        
+    is_dark = st.toggle("🌙 Dark Mode", value=(st.session_state.theme_mode == 'Dark'))
+    new_mode = 'Dark' if is_dark else 'Light'
+    
+    if new_mode != st.session_state.theme_mode:
+        st.session_state.theme_mode = new_mode
+        # Update Streamlit config to natively switch themes
+        os.makedirs('.streamlit', exist_ok=True)
+        with open('.streamlit/config.toml', 'w') as f:
+            f.write(f'[theme]\nbase="{new_mode.lower()}"\nprimaryColor="#2980b9"\n')
+        st.rerun()
+    st.divider()
+
+mermaid_theme = "dark" if st.session_state.theme_mode == 'Dark' else "default"
+
+# Metric Cards Custom CSS (Streamlit doesn't have native metric cards exactly as requested, so we retain minimal CSS for layout)
+is_dark_mode = st.session_state.theme_mode == 'Dark'
+st.markdown(f"""
 <style>
-    .stApp {
-        background-color: #f4f6f9;
-    }
-    .metric-card {
-        background-color: #ffffff;
+    .metric-card {{
+        background-color: {"#111111" if is_dark_mode else "#ffffff"} !important;
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        box-shadow: {"0 0 0 1px #333333" if is_dark_mode else "0 4px 6px rgba(0,0,0,0.1)"};
         text-align: center;
         margin-bottom: 20px;
-    }
-    .status-pending { color: #f39c12; font-weight: bold; }
-    .status-funded { color: #27ae60; font-weight: bold; }
-    .status-analyzing { color: #2980b9; font-weight: bold; }
+        border: 1px solid {"#333333" if is_dark_mode else "#e0e0e0"} !important;
+    }}
+    .metric-card h3, .metric-card h2 {{
+        color: {"#ffffff" if is_dark_mode else "#1f1f1f"} !important;
+    }}
 </style>
 """, unsafe_allow_html=True)
 
 
-# -----------------------------------------------------------------------------
-# 1. State Management
-# -----------------------------------------------------------------------------
 if 'erp_data' not in st.session_state:
     try:
         st.session_state.erp_data = pd.read_csv('mock_erp_data.csv')
@@ -140,14 +160,19 @@ st.markdown("""
 
 st.markdown("Autonomous detection and resolution of supply chain funding gaps.")
 
-# Top metrics
+# Top metrics calculation
+df = st.session_state.erp_data
+total_po_value = df['Amount'].sum()
+pending_gaps = len(df[(df['Amount'] > df['Available_Balance']) & (df['Status'] == 'Pending')])
+active_financing = df[df['Status'] == 'Funded']['Amount'].sum()
+
 cols = st.columns(3)
 with cols[0]:
-    st.markdown('<div class="metric-card"><h3>Total PO Value</h3><h2>$230,000</h2></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card"><h3>Total PO Value</h3><h2>${total_po_value:,.0f}</h2></div>', unsafe_allow_html=True)
 with cols[1]:
-    st.markdown('<div class="metric-card"><h3>Pending Gaps</h3><h2>2</h2></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card"><h3>Pending Gaps</h3><h2>{pending_gaps}</h2></div>', unsafe_allow_html=True)
 with cols[2]:
-    st.markdown('<div class="metric-card"><h3>Active Financing</h3><h2>$0</h2></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="metric-card"><h3>Active Financing</h3><h2>${active_financing:,.0f}</h2></div>', unsafe_allow_html=True)
 
 st.divider()
 
@@ -181,26 +206,46 @@ with col1:
     st.session_state.erp_data = st.data_editor(st.session_state.erp_data, width='stretch', hide_index=True, num_rows="dynamic")
     
     st.markdown("**Agent Action:**")
-    if st.button("🔍 Run Gap Analysis (Agent Scan)", type="primary"):
-        with st.spinner("Agent scanning ERP data..."):
-            time.sleep(1) # simulate scan
-            
-            # Find a PO with a gap (Amount > Available) and status Pending
-            df = st.session_state.erp_data
-            gaps = df[(df['Amount'] > df['Available_Balance']) & (df['Status'] == 'Pending')]
-            
-            if not gaps.empty:
-                po_to_fund = gaps.iloc[0].to_dict()
-                st.session_state.selected_po = po_to_fund
-                st.session_state.funding_gap_detected = True
+    col2a, col2b = st.columns([1, 1])
+    with col2a:
+        if st.button("🔍 Run Gap Analysis (Agent Scan)", type="primary"):
+            with st.spinner("Agent scanning ERP data..."):
+                time.sleep(1) # simulate scan
                 
-                # Fetch reasoning
-                po_str = json.dumps(po_to_fund, indent=2)
-                st.session_state.agent_reasoning = get_agent_reasoning(po_str)
-                st.session_state.execution_status = "Awaiting Action"
-                st.rerun()
-            else:
-                st.success("No funding gaps detected at this time.")
+                # Find a PO with a gap (Amount > Available) and status Pending
+                df = st.session_state.erp_data
+                gaps = df[(df['Amount'] > df['Available_Balance']) & (df['Status'] == 'Pending')]
+                
+                if not gaps.empty:
+                    po_to_fund = gaps.iloc[0].to_dict()
+                    st.session_state.selected_po = po_to_fund
+                    st.session_state.funding_gap_detected = True
+                    
+                    # Fetch reasoning
+                    po_str = json.dumps(po_to_fund, indent=2)
+                    st.session_state.agent_reasoning = get_agent_reasoning(po_str)
+                    st.session_state.execution_status = "Awaiting Action"
+                    st.rerun()
+                else:
+                    st.success("No funding gaps detected at this time.")
+    with col2b:
+        if st.button("🔄 Reset System State"):
+            default_data = """PO_Number,Supplier,Required_Date,Amount,Available_Balance,Status
+PO-1001,Acme Corp,2026-03-01,85000.0,50000.0,Pending
+PO-1002,Global Industries,2026-03-05,25000.0,25000.0,Funded
+PO-1003,TechFlow Systems,2026-03-10,120000.0,120000.0,Funded
+PO-1004,Nexus Dynamics,2026-03-15,35000.0,35000.0,Pending"""
+            
+            with open('mock_erp_data.csv', 'w') as f:
+                f.write(default_data)
+            
+            st.session_state.erp_data = pd.read_csv('mock_erp_data.csv')
+            st.session_state.funding_gap_detected = False
+            st.session_state.selected_po = None
+            st.session_state.agent_reasoning = ""
+            st.session_state.lender_rates = []
+            st.session_state.execution_status = "Waiting..."
+            st.rerun()
 
 # Screen 2: Reasoning Engine
 with col2:
@@ -334,17 +379,17 @@ if submit and prompt:
                 st.session_state.chat_messages.append({"role": "assistant", "content": reply})
 import streamlit.components.v1 as components
 
-def st_mermaid_fixed(code):
+def st_mermaid_fixed(code, theme="default"):
     html_code = f"""
     <div class="mermaid" style="display: flex; justify-content: center;">
         {code.strip()}
     </div>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({{ startOnLoad: true, theme: 'default', securityLevel: 'loose' }});
+        mermaid.initialize({{ startOnLoad: true, theme: '{theme}', securityLevel: 'loose' }});
     </script>
     """
-    components.html(html_code, height=225)
+    components.html(html_code, height=500)
 # Footer/Tutorial Docs
 
 st.video("video.mp4")
@@ -409,7 +454,7 @@ with st.expander("📚 Detailed Workflow & Tutorial", expanded=False):
     """
 
     
-    st_mermaid_fixed(mermaid_code)
+    st_mermaid_fixed(mermaid_code, theme=mermaid_theme)
 
     st.markdown("""
     ### 💻 Technologies Used
