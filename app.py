@@ -6,6 +6,7 @@ import json
 import random
 from streamlit_mermaid import st_mermaid
 import os
+import streamlit.components.v1 as components
 
 # App Configuration
 st.set_page_config(
@@ -19,6 +20,8 @@ st.set_page_config(
         "About": None
     }
 )
+# Footer/Tutorial Docs
+
 # -----------------------------------------------------------------------------
 # 1. State Management
 # -----------------------------------------------------------------------------
@@ -158,6 +161,75 @@ st.markdown("""
 **Project:** ASSIGNMENT 2 - AGENTIC FINTECH
 """)
 
+with st.expander("📚 Detailed Workflow & Tutorial", expanded=False):
+    st.markdown("""
+    ### 🎯 Getting Started with the Industrial JIT Financing Agent
+    Welcome to the Industrial JIT (Just-In-Time) Financing Agent demo. This application demonstrates an autonomous AI agent capable of detecting supply chain funding gaps and proposing real-time financing solutions.
+
+    ### 🛠️ Step-by-Step Workflow
+    
+    **AGENT 1 (ERP MONITOR)**
+    1. Read real-time Purchase Order Data from ERP system (CSV)
+    2. Scan for Purchase Orders where `Amount` exceeds `Available_Balance`
+    3. Detect immediate funding gap and exact shortfall
+    4. HANDOVER to AGENT 2
+
+    **AGENT 2 (CREDIT ANALYST)**
+    1. Receive funding gap and order details from AGENT 1
+    2. Call NVIDIA NIM API to assess critical supply chain risks and state required funding
+    3. Present risk assessment reasoning to HUMAN
+    4. Query external Fintech Lender APIs for real-time financing rates
+    5. Present top financing options with Terms and Approval times
+    6. HANDOVER to HUMAN
+
+    **HUMAN (APPROVAL MANAGER)**
+    1. Review risk assessment and financing options
+    2. Decide whether to **Approve Funding** for the best rate or **Reject & Cancel** (YES/NO)
+    3. If YES, funds are transferred and PO Status is updated to 'Funded'
+
+    **AGENT 3 (WORKFLOW ASSISTANT)**
+    1. Receive entire ERP context and chat history
+    2. Wait for HUMAN questions regarding order values, risks, or data insights
+    3. Use NVIDIA NIM API to generate real-time answers based on data
+    4. Present answer to HUMAN
+
+    ### 📊 System Architecture Flowchart
+    """)
+    mermaid_code = """
+        graph LR
+            subgraph AGENT_1 [AGENT 1: ERP MONITOR]
+                A1[1. Read ERP Data CSV] --> A2[2. Detect Funding Gap]
+            end
+
+            subgraph AGENT_2 [AGENT 2: CREDIT ANALYST]
+                B1[3. Assess Risk via NVIDIA API] --> B2[4. Query Fintech Lenders]
+            end
+
+            subgraph HUMAN [HUMAN: APPROVAL MANAGER]
+                H1{5. Review and Decide} -->|Approve| H2(6. Transfer Funds)
+                H1 -->|Reject| H3(Cancel)
+            end
+
+            subgraph AGENT_3 [AGENT 3: WORKFLOW ASSISTANT]
+                C1[Receive User Query] --> C2[Generate Insights via AI]
+            end
+
+            A2 -->|Handover Workflow| B1
+            B2 -->|Present Options| H1
+            A1 -.->|Data Context| C1
+            C2 -.->|Answer Questions| C1
+    """
+
+    
+    st_mermaid(mermaid_code)
+
+    st.markdown("""
+    ### 💻 Technologies Used
+    - **Frontend:** Streamlit
+    - **AI Engine:** NVIDIA NIM API
+    - **Data Handling:** Pandas DataFrames
+    """)
+
 st.markdown("Autonomous detection and resolution of supply chain funding gaps.")
 
 # Top metrics calculation
@@ -177,95 +249,94 @@ with cols[2]:
 st.divider()
 
 # Layout for the 4 sections
-col1, col2 = st.columns([1, 1])
 
 # Screen 1: ERP Monitoring
-with col1:
-    st.subheader("📊 1. ERP System Monitor")
-    st.markdown("Real-time Purchase Order Data")
-    
-    # File upload and download template
-    with open("mock_erp_data.csv", "r") as f:
-        csv_template = f.read()
-    st.download_button(
-        label="📥 Download Template CSV",
-        data=csv_template,
-        file_name="erp_template.csv",
-        mime="text/csv",
-    )
-    
-    uploaded_file = st.file_uploader("Upload your ERP CSV data", type=['csv'])
-    if uploaded_file is not None:
-        try:
-            st.session_state.erp_data = pd.read_csv(uploaded_file)
-            st.success("Data uploaded successfully!")
-        except Exception as e:
-            st.error(f"Error reading CSV: {e}")
 
-    # Editable Table
-    st.session_state.erp_data = st.data_editor(st.session_state.erp_data, width='stretch', hide_index=True, num_rows="dynamic")
-    
-    st.markdown("**Agent Action:**")
-    col2a, col2b = st.columns([1, 1])
-    with col2a:
-        if st.button("🔍 Run Gap Analysis (Agent Scan)", type="primary"):
-            with st.spinner("Agent scanning ERP data..."):
-                time.sleep(1) # simulate scan
+st.subheader("📊 1. ERP System Monitor")
+st.markdown("Real-time Purchase Order Data")
+
+# File upload and download template
+with open("mock_erp_data.csv", "r") as f:
+    csv_template = f.read()
+st.download_button(
+    label="📥 Download Template CSV",
+    data=csv_template,
+    file_name="erp_template.csv",
+    mime="text/csv",
+)
+
+uploaded_file = st.file_uploader("Upload your ERP CSV data", type=['csv'])
+if uploaded_file is not None:
+    try:
+        st.session_state.erp_data = pd.read_csv(uploaded_file)
+        st.success("Data uploaded successfully!")
+    except Exception as e:
+        st.error(f"Error reading CSV: {e}")
+
+# Editable Table
+st.session_state.erp_data = st.data_editor(st.session_state.erp_data, width='stretch', hide_index=True, num_rows="dynamic")
+
+st.markdown("**Agent Action:**")
+col2a, col2b = st.columns([1, 1])
+with col2a:
+    if st.button("🔍 Run Gap Analysis (Agent Scan)", type="primary", width='stretch'):
+        with st.spinner("Agent scanning ERP data..."):
+            time.sleep(1) # simulate scan
+            
+            # Find a PO with a gap (Amount > Available) and status Pending
+            df = st.session_state.erp_data
+            gaps = df[(df['Amount'] > df['Available_Balance']) & (df['Status'] == 'Pending')]
+            
+            if not gaps.empty:
+                po_to_fund = gaps.iloc[0].to_dict()
+                st.session_state.selected_po = po_to_fund
+                st.session_state.funding_gap_detected = True
                 
-                # Find a PO with a gap (Amount > Available) and status Pending
-                df = st.session_state.erp_data
-                gaps = df[(df['Amount'] > df['Available_Balance']) & (df['Status'] == 'Pending')]
-                
-                if not gaps.empty:
-                    po_to_fund = gaps.iloc[0].to_dict()
-                    st.session_state.selected_po = po_to_fund
-                    st.session_state.funding_gap_detected = True
-                    
-                    # Fetch reasoning
-                    po_str = json.dumps(po_to_fund, indent=2)
-                    st.session_state.agent_reasoning = get_agent_reasoning(po_str)
-                    st.session_state.execution_status = "Awaiting Action"
-                    st.rerun()
-                else:
-                    st.success("No funding gaps detected at this time.")
-    with col2b:
-        if st.button("🔄 Reset System State"):
-            default_data = """PO_Number,Supplier,Required_Date,Amount,Available_Balance,Status
+                # Fetch reasoning
+                po_str = json.dumps(po_to_fund, indent=2)
+                st.session_state.agent_reasoning = get_agent_reasoning(po_str)
+                st.session_state.execution_status = "Awaiting Action"
+                st.rerun()
+            else:
+                st.success("No funding gaps detected at this time.")
+with col2b:
+    if st.button("🔄 Reset System State", width='stretch'):
+        default_data = """PO_Number,Supplier,Required_Date,Amount,Available_Balance,Status
 PO-1001,Acme Corp,2026-03-01,85000.0,50000.0,Pending
 PO-1002,Global Industries,2026-03-05,25000.0,25000.0,Funded
 PO-1003,TechFlow Systems,2026-03-10,120000.0,120000.0,Funded
 PO-1004,Nexus Dynamics,2026-03-15,35000.0,35000.0,Pending"""
-            
-            with open('mock_erp_data.csv', 'w') as f:
-                f.write(default_data)
-            
-            st.session_state.erp_data = pd.read_csv('mock_erp_data.csv')
-            st.session_state.funding_gap_detected = False
-            st.session_state.selected_po = None
-            st.session_state.agent_reasoning = ""
-            st.session_state.lender_rates = []
-            st.session_state.execution_status = "Waiting..."
-            st.rerun()
+        
+        with open('mock_erp_data.csv', 'w') as f:
+            f.write(default_data)
+        
+        st.session_state.erp_data = pd.read_csv('mock_erp_data.csv')
+        st.session_state.funding_gap_detected = False
+        st.session_state.selected_po = None
+        st.session_state.agent_reasoning = ""
+        st.session_state.lender_rates = []
+        st.session_state.execution_status = "Waiting..."
+        st.rerun()
 
 # Screen 2: Reasoning Engine
-with col2:
-    st.subheader("🧠 2. Agent Reasoning Layer")
-    if st.session_state.funding_gap_detected and st.session_state.selected_po:
-        po_num = st.session_state.selected_po['PO_Number']
-        gap_amt = st.session_state.selected_po['Amount'] - st.session_state.selected_po['Available_Balance']
+
+st.subheader("🧠 2. Agent Reasoning Layer")
+if st.session_state.funding_gap_detected and st.session_state.selected_po:
+    po_num = st.session_state.selected_po['PO_Number']
+    gap_amt = st.session_state.selected_po['Amount'] - st.session_state.selected_po['Available_Balance']
+    
+    st.info(f"🚨 **Gap Detected for {po_num} | Shortfall: ${gap_amt:,.2f}**")
+    
+    with st.container(border=True):
+        st.markdown("**NVIDIA NIM Response (`nemotron-4-340b-instruct`):**")
+        st.write(st.session_state.agent_reasoning)
         
-        st.info(f"🚨 **Gap Detected for {po_num} | Shortfall: ${gap_amt:,.2f}**")
-        
-        with st.container(border=True):
-            st.markdown("**NVIDIA NIM Response (`nemotron-4-340b-instruct`):**")
-            st.write(st.session_state.agent_reasoning)
-            
-        if st.button("⚙️ Trigger Tool Use (Query Lenders)"):
-            with st.spinner("Agent querying lender APIs..."):
-                st.session_state.lender_rates = query_lender_api(gap_amt)
-                st.rerun()
-    else:
-        st.info("Agent is idle. Run Gap Analysis to begin.")
+    if st.button("⚙️ Trigger Tool Use (Query Lenders)", width='stretch'):
+        with st.spinner("Agent querying lender APIs..."):
+            st.session_state.lender_rates = query_lender_api(gap_amt)
+            st.rerun()
+else:
+    st.info("Agent is idle. Run Gap Analysis to begin.")
 
 st.divider()
 
@@ -340,7 +411,7 @@ with st.form("chat_form", clear_on_submit=True):
     with cols[0]:
         prompt = st.text_input("Ask the agent a question...", label_visibility="collapsed", placeholder="Ask the agent a question...")
     with cols[1]:
-        submit = st.form_submit_button("Send")
+        submit = st.form_submit_button("Send", width='stretch')
 
 if has_messages or (submit and prompt):
     chat_container = chat_placeholder.container(height=300)
@@ -377,88 +448,5 @@ if submit and prompt:
                 
                 st.markdown(reply)
                 st.session_state.chat_messages.append({"role": "assistant", "content": reply})
-import streamlit.components.v1 as components
-
-def st_mermaid_fixed(code, theme="default"):
-    html_code = f"""
-    <div class="mermaid" style="display: flex; justify-content: center;">
-        {code.strip()}
-    </div>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({{ startOnLoad: true, theme: '{theme}', securityLevel: 'loose' }});
-    </script>
-    """
-    components.html(html_code, height=500)
-# Footer/Tutorial Docs
 
 st.video("video.mp4")
-
-with st.expander("📚 Detailed Workflow & Tutorial", expanded=False):
-    st.markdown("""
-    ### 🎯 Getting Started with the Industrial JIT Financing Agent
-    Welcome to the Industrial JIT (Just-In-Time) Financing Agent demo. This application demonstrates an autonomous AI agent capable of detecting supply chain funding gaps and proposing real-time financing solutions.
-
-    ### 🛠️ Step-by-Step Workflow
-    
-    **AGENT 1 (ERP MONITOR)**
-    1. Read real-time Purchase Order Data from ERP system (CSV)
-    2. Scan for Purchase Orders where `Amount` exceeds `Available_Balance`
-    3. Detect immediate funding gap and exact shortfall
-    4. HANDOVER to AGENT 2
-
-    **AGENT 2 (CREDIT ANALYST)**
-    1. Receive funding gap and order details from AGENT 1
-    2. Call NVIDIA NIM API to assess critical supply chain risks and state required funding
-    3. Present risk assessment reasoning to HUMAN
-    4. Query external Fintech Lender APIs for real-time financing rates
-    5. Present top financing options with Terms and Approval times
-    6. HANDOVER to HUMAN
-
-    **HUMAN (APPROVAL MANAGER)**
-    1. Review risk assessment and financing options
-    2. Decide whether to **Approve Funding** for the best rate or **Reject & Cancel** (YES/NO)
-    3. If YES, funds are transferred and PO Status is updated to 'Funded'
-
-    **AGENT 3 (WORKFLOW ASSISTANT)**
-    1. Receive entire ERP context and chat history
-    2. Wait for HUMAN questions regarding order values, risks, or data insights
-    3. Use NVIDIA NIM API to generate real-time answers based on data
-    4. Present answer to HUMAN
-
-    ### 📊 System Architecture Flowchart
-    """)
-    mermaid_code = """
-        graph LR
-            subgraph AGENT_1 [AGENT 1: ERP MONITOR]
-                A1[1. Read ERP Data CSV] --> A2[2. Detect Funding Gap]
-            end
-
-            subgraph AGENT_2 [AGENT 2: CREDIT ANALYST]
-                B1[3. Assess Risk via NVIDIA API] --> B2[4. Query Fintech Lenders]
-            end
-
-            subgraph HUMAN [HUMAN: APPROVAL MANAGER]
-                H1{5. Review and Decide} -->|Approve| H2(6. Transfer Funds)
-                H1 -->|Reject| H3(Cancel)
-            end
-
-            subgraph AGENT_3 [AGENT 3: WORKFLOW ASSISTANT]
-                C1[Receive User Query] --> C2[Generate Insights via AI]
-            end
-
-            A2 -->|Handover Workflow| B1
-            B2 -->|Present Options| H1
-            A1 -.->|Data Context| C1
-            C2 -.->|Answer Questions| C1
-    """
-
-    
-    st_mermaid_fixed(mermaid_code, theme=mermaid_theme)
-
-    st.markdown("""
-    ### 💻 Technologies Used
-    - **Frontend:** Streamlit
-    - **AI Engine:** NVIDIA NIM API
-    - **Data Handling:** Pandas DataFrames
-    """)
