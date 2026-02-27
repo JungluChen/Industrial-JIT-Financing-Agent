@@ -456,4 +456,11 @@ if submit and prompt:
                 st.markdown(reply)
                 st.session_state.chat_messages.append({"role": "assistant", "content": reply})
 
-st.video("video.mp4")
+import os
+video_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "video.mp4")
+if os.path.exists(video_path):
+    with open(video_path, "rb") as video_file:
+        video_bytes = video_file.read()
+    st.video(video_bytes)
+else:
+    st.warning("Video tutorial file not found. Please ensure video.mp4 exists in the repository.")
