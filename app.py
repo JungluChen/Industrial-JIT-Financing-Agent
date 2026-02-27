@@ -269,6 +269,7 @@ st.download_button(
     data=csv_template,
     file_name="erp_template.csv",
     mime="text/csv",
+    width='stretch'
 )
 
 uploaded_file = st.file_uploader("Upload your ERP CSV data", type=['csv'])
