@@ -4,9 +4,15 @@ from openai import OpenAI
 import time
 import json
 import random
-from streamlit_mermaid import st_mermaid
 import os
+import base64
 import streamlit.components.v1 as components
+
+def st_mermaid(code, theme="default"):
+    mermaid_code = f"%%{{init: {{'theme': '{theme}'}}}}%%\n{code}"
+    encoded = base64.b64encode(mermaid_code.encode('utf-8')).decode('utf-8')
+    url = f"https://mermaid.ink/svg/{encoded}"
+    st.markdown(f'<div style="display: flex; justify-content: center;"><img src="{url}" alt="System Architecture Flowchart" style="max-width: 100%;"></div>', unsafe_allow_html=True)
 
 # App Configuration
 st.set_page_config(
@@ -221,7 +227,7 @@ with st.expander("📚 Detailed Workflow & Tutorial", expanded=False):
     """
 
     
-    st_mermaid(mermaid_code)
+    st_mermaid(mermaid_code, theme=mermaid_theme)
 
     st.markdown("""
     ### 💻 Technologies Used
