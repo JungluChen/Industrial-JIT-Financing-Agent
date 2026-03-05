@@ -2,7 +2,7 @@
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](https://streamlit.io/)
-[![NVIDIA NIM](https://img.shields.io/badge/NVIDIA%20NIM-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](https://www.nvidia.com/en-us/ai-data-science/generative-ai/nim/)
+[![NVIDIA NIM](https://img.shields.io/badge/NVIDIA%20NIM-76B900?style=for-the-badge&logo=nvidia&logoColor=white)]([https://www.nvidia.com/en-us/ai-data-science/generative-ai/nim/](https://www.nvidia.com/en-us/solutions/ai/agentic-ai/))
 [![Remotion](https://img.shields.io/badge/Remotion-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://www.remotion.dev/)
 
 **Just-In-Time (JIT) Financing for the Modern Supply Chain.**
