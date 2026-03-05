@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Industrial JIT Financing Agent | AI-Powered Smart Manufacturing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #76b900; /* NVIDIA Green */
+            --secondary-color: #00ffcc;
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        .reveal {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .reveal h1 { color: var(--primary-color); font-size: 2.5em; }
+        .reveal h2 { color: var(--secondary-color); }
+        
+        .highlight { color: var(--primary-color); font-weight: bold; }
+        .accent { color: var(--secondary-color); }
+
+        .slide-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.4em;
+            color: #555;
+            letter-spacing: 2px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(118, 185, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .reveal .slides section iframe { 
+            width: 100%; 
+            height: 500px; 
+            border: 2px solid var(--primary-color); 
+            border-radius: 15px;
+            background: #fff;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(118, 185, 0, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(118, 185, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(118, 185, 0, 0); }
+        }
+
+        .pulse-border {
+            animation: pulse 2s infinite;
+        }
+
+        /* Particle Background */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--primary-color);
+            color: black;
+            font-weight: bold;
+            font-size: 0.5em;
+            border-radius: 20px;
+            vertical-align: middle;
+            margin-bottom: 10px;
+        }
+
+        blockquote {
+            background: rgba(255, 75, 75, 0.1);
+            border-left: 10px solid #ff4b4b !important;
+            padding: 20px !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Slide 1: Title -->
+            <section data-background-gradient="radial-gradient(circle, #1a1a1a 0%, #000 100%)">
+                <canvas id="particles-canvas"></canvas>
+                <div class="tag">AI-DRIVEN FINTECH</div>
+                <h1>Industrial JIT Financing Agent</h1>
+                <p class="highlight" style="font-size: 1.2em;">Zero-Friction Liquidity for Smart Manufacturing</p>
+                <div style="margin-top: 50px; font-size: 0.6em; opacity: 0.7;">
+                    Powered by NVIDIA NIM & Agentic AI
+                </div>
+                <div class="slide-footer">DBA5105 | INDUSTRIAL CREDIT AGENT</div>
+            </section>
+
+            <!-- Slide 2: The Problem -->
+            <section>
+                <h2>The Liquidity Gap</h2>
+                <div class="grid-2">
+                    <div class="card fragment fade-up">
+                        <h3 style="font-size: 1em; color: #ff4b4b;">Frozen Capital</h3>
+                        <p style="font-size: 0.7em;">Billions locked in raw materials and WIP inventory (BOM complexity).</p>
+                    </div>
+                    <div class="card fragment fade-up">
+                        <h3 style="font-size: 1em; color: #ff4b4b;">Credit Lag</h3>
+                        <p style="font-size: 0.7em;">Manual credit approval takes weeks. Production won't wait.</p>
+                    </div>
+                </div>
+                <p class="fragment fade-in" style="margin-top: 40px; font-size: 0.8em;">
+                    Result: <span class="highlight">Missed orders and supply chain fragility.</span>
+                </p>
+            </section>
+
+            <!-- Slide 3: The Solution (Architecture) -->
+            <section>
+                <h3>Autonomous Credit Orchestration</h3>
+                <div class="grid-2">
+                    <div style="text-align: left; font-size: 0.7em;">
+                        <ul>
+                            <li class="fragment fade-right"><strong>ERP Monitoring:</strong> Real-time scan of production needs.</li>
+                            <li class="fragment fade-right"><strong>NVIDIA NIM:</strong> LLM-driven credit risk reasoning.</li>
+                            <li class="fragment fade-right"><strong>Dynamic Tooling:</strong> Real-time financial data retrieval.</li>
+                            <li class="fragment fade-right"><strong>Instant Approval:</strong> Just-In-Time financing triggers.</li>
+                        </ul>
+                    </div>
+                    <div class="fragment zoom-in">
+                        <!-- Placeholder for Architecture Diagram -->
+                        <div style="border: 2px dashed var(--primary-color); padding: 40px; border-radius: 10px;">
+                            <img src="docs/images/diagram_2.svg" alt="Architecture" style="width: 100%; filter: drop-shadow(0 0 10px var(--primary-color));">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Live Product Walkthrough -->
+            <section>
+                <h3>System in Action</h3>
+                <div class="pulse-border" style="border-radius: 15px;">
+                    <iframe src="https://industrial-jit-financing-agent.streamlit.app/?embed=true"></iframe>
+                </div>
+                <p style="font-size: 0.4em; color: #888; margin-top: 10px;">
+                    Watch: <span class="accent">Autonomous Scan</span> → <span class="accent">Risk Analysis</span> → <span class="accent">HITL Approval</span>
+                </p>
+            </section>
+
+            <!-- Slide 5: Security & HITL -->
+            <section>
+                <h2>Trust by Design</h2>
+                <blockquote class="fragment fade-in">
+                    "The Agent stops and asks for human permission to prevent financial loss."
+                </blockquote>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card fragment fade-up" style="font-size: 0.6em;">
+                        <span class="highlight">✓</span> No Hallucinations in Finance
+                    </div>
+                    <div class="card fragment fade-up" style="font-size: 0.6em;">
+                        <span class="highlight">✓</span> Multi-Signature Authorization
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Technology Stack -->
+            <section>
+                <h2>Agentic Stack</h2>
+                <div class="grid-2" style="font-size: 0.6em;">
+                    <div class="card fragment fade-in">
+                        <h4 class="accent">Intelligence</h4>
+                        <p>NVIDIA NIM (Llama-3-70B)</p>
+                        <p>Structured JSON Outputs</p>
+                    </div>
+                    <div class="card fragment fade-in">
+                        <h4 class="accent">Orchestration</h4>
+                        <p>Custom State Machine</p>
+                        <p>Event-Driven ERP Scans</p>
+                    </div>
+                    <div class="card fragment fade-in">
+                        <h4 class="accent">Interface</h4>
+                        <p>Streamlit Cloud</p>
+                        <p>Real-time HITL Dashboard</p>
+                    </div>
+                    <div class="card fragment fade-in">
+                        <h4 class="accent">Data</h4>
+                        <p>ERP Integration (API)</p>
+                        <p>Credit Scoring Engine</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Conclusion -->
+            <section data-background-color="var(--primary-color)">
+                <h2 style="color: black;">The Future of Manufacturing</h2>
+                <h3 style="color: #000; opacity: 0.8;">JIT Credit = JIT Production</h3>
+                <p style="color: black; font-weight: bold; margin-top: 50px;">
+                    Let's eliminate the friction.
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'convex', // none/fade/slide/convex/concave/zoom
+            backgroundTransition: 'zoom',
+            autoPlayMedia: true,
+            fragmentInURL: true,
+            // Learn about self-hosted plugins at: https://revealjs.com/plugins/
+            plugins: [ ]
+        });
+
+        // Particle Background Logic
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#76b900';
+                ctx.fill();
+            }
+        }
+        
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
