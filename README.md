@@ -89,7 +89,7 @@ graph TD
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-repo/industrial_credit_agent.git
+git clone https://github.com/JungluChen/Industrial-JIT-Financing-Agent.git
 cd industrial_credit_agent
 ```
 
