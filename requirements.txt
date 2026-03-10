@@ -3,3 +3,4 @@ openai
 pandas
 plotly
 streamlit-mermaid
+streamlit-pdf-viewer
