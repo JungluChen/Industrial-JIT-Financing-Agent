@@ -506,15 +506,28 @@ if os.path.exists(video_path):
 else:
     st.warning("Video tutorial file not found. Please ensure video.mp4 exists in the repository.")
 
-st.subheader("7. Document")
-PDFpath=r"Industrial_Credit_Agent_Flow.pdf"
 
-import base64
-pdf_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), PDFpath)
+st.subheader("📄 7. Document")
+pdf_filename = "Industrial_Credit_Agent_Flow.pdf"
+pdf_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), pdf_filename)
+
 if os.path.exists(pdf_path):
     with open(pdf_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>'
+        pdf_data = f.read()
+    
+    # Provide a download button as a reliable alternative for Cloud deployments
+    st.download_button(
+        label="📥 Download Workflow PDF",
+        data=pdf_data,
+        file_name=pdf_filename,
+        mime="application/pdf"
+    )
+
+    import base64
+    base64_pdf = base64.b64encode(pdf_data).decode('utf-8')
+    # Using <embed> instead of <iframe> can sometimes bypass Chrome's data URI blocking
+    pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf">'
     st.markdown(pdf_display, unsafe_allow_html=True)
 else:
-    st.warning("Document file not found. Please ensure Industrial_Credit_Agent_Flow.pdf exists in the repository.")
+    st.warning(f"Document file '{pdf_filename}' not found. Please ensure it exists in the repository.")
+
