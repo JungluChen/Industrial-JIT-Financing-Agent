@@ -15,7 +15,6 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
-import streamlit as st
 
 # 針對右下角所有懸浮元件的強制隱藏
 hide_streamlit_cloud_elements = """
@@ -513,21 +512,19 @@ pdf_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), pdf_filename
 
 if os.path.exists(pdf_path):
     with open(pdf_path, "rb") as f:
-        pdf_data = f.read()
-    
-    # Provide a download button as a reliable alternative for Cloud deployments
+        pdf_bytes = f.read()
+        
     st.download_button(
-        label="📥 Download Workflow PDF",
-        data=pdf_data,
+        label="📥 Download Flowchart PDF",
+        data=pdf_bytes,
         file_name=pdf_filename,
         mime="application/pdf"
     )
+    
+    st.markdown("*(Note: Interactive PDF preview below may be blocked by your browser's security settings when hosted on Streamlit Cloud. Please use the download button above to view it.)*")
 
-    import base64
-    base64_pdf = base64.b64encode(pdf_data).decode('utf-8')
-    # Using <embed> instead of <iframe> can sometimes bypass Chrome's data URI blocking
-    pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf">'
+    base64_pdf = base64.b64encode(pdf_bytes).decode('utf-8')
+    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>'
     st.markdown(pdf_display, unsafe_allow_html=True)
 else:
-    st.warning(f"Document file '{pdf_filename}' not found. Please ensure it exists in the repository.")
-
+    st.warning("PDF document not found. Please ensure Industrial_Credit_Agent_Flow.pdf exists in the repository.")
