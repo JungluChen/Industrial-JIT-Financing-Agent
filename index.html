@@ -1,20 +1,23 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Industrial JIT Financing Agent | AI-Powered Smart Manufacturing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
-    
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@800&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
-            --primary-color: #76b900; /* NVIDIA Green */
+            --primary-color: #76b900;
+            /* NVIDIA Green */
             --secondary-color: #00ffcc;
             --bg-color: #000000;
             --text-color: #ffffff;
@@ -26,17 +29,31 @@
             color: var(--text-color);
         }
 
-        .reveal h1, .reveal h2, .reveal h3 {
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
             font-family: 'Montserrat', sans-serif;
             text-transform: uppercase;
             letter-spacing: -1px;
         }
 
-        .reveal h1 { color: var(--primary-color); font-size: 2.5em; }
-        .reveal h2 { color: var(--secondary-color); }
-        
-        .highlight { color: var(--primary-color); font-weight: bold; }
-        .accent { color: var(--secondary-color); }
+        .reveal h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+        }
+
+        .reveal h2 {
+            color: var(--secondary-color);
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .accent {
+            color: var(--secondary-color);
+        }
 
         .slide-footer {
             position: absolute;
@@ -68,19 +85,27 @@
             border-color: var(--primary-color);
         }
 
-        .reveal .slides section iframe { 
-            width: 100%; 
-            height: 500px; 
-            border: 2px solid var(--primary-color); 
+        .reveal .slides section iframe {
+            width: 100%;
+            height: 500px;
+            border: 2px solid var(--primary-color);
             border-radius: 15px;
             background: #fff;
         }
 
         /* Animations */
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(118, 185, 0, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(118, 185, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(118, 185, 0, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(118, 185, 0, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(118, 185, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(118, 185, 0, 0);
+            }
         }
 
         .pulse-border {
@@ -118,10 +143,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="reveal">
         <div class="slides">
-            
+
             <!-- Slide 1: Title -->
             <section data-background-gradient="radial-gradient(circle, #1a1a1a 0%, #000 100%)">
                 <canvas id="particles-canvas"></canvas>
@@ -132,8 +158,11 @@
                     Powered by NVIDIA NIM & Agentic AI
                 </div>
                 <div style="margin-top: 20px; font-size: 0.5em;">
-                    <a href="https://github.com/JungluChen/Industrial-JIT-Financing-Agent/tree/main" style="color: var(--primary-color); text-decoration: none; margin-right: 20px;">📂 GitHub Source</a>
-                    <a href="https://industrial-jit-financing-agent.streamlit.app/" style="color: var(--secondary-color); text-decoration: none;">🚀 Streamlit App</a>
+                    <a href="https://github.com/JungluChen/Industrial-JIT-Financing-Agent/tree/main"
+                        style="color: var(--primary-color); text-decoration: none; margin-right: 20px;">📂 GitHub
+                        Source</a>
+                    <a href="https://industrial-jit-financing-agent.streamlit.app/"
+                        style="color: var(--secondary-color); text-decoration: none;">🚀 Streamlit App</a>
                 </div>
                 <div class="slide-footer">DBA5105 | INDUSTRIAL CREDIT AGENT</div>
             </section>
@@ -144,7 +173,8 @@
                 <div class="grid-2">
                     <div class="card fragment fade-up">
                         <h3 style="font-size: 1em; color: #ff4b4b;">Frozen Capital</h3>
-                        <p style="font-size: 0.7em;">Billions locked in raw materials and WIP inventory (BOM complexity).</p>
+                        <p style="font-size: 0.7em;">Billions locked in raw materials and WIP inventory (BOM
+                            complexity).</p>
                     </div>
                     <div class="card fragment fade-up">
                         <h3 style="font-size: 1em; color: #ff4b4b;">Credit Lag</h3>
@@ -162,16 +192,21 @@
                 <div class="grid-2">
                     <div style="text-align: left; font-size: 0.7em;">
                         <ul>
-                            <li class="fragment fade-right"><strong>ERP Monitoring:</strong> Real-time scan of production needs.</li>
-                            <li class="fragment fade-right"><strong>NVIDIA NIM:</strong> LLM-driven credit risk reasoning.</li>
-                            <li class="fragment fade-right"><strong>Dynamic Tooling:</strong> Real-time financial data retrieval.</li>
-                            <li class="fragment fade-right"><strong>Instant Approval:</strong> Just-In-Time financing triggers.</li>
+                            <li class="fragment fade-right"><strong>ERP Monitoring:</strong> Real-time scan of
+                                production needs.</li>
+                            <li class="fragment fade-right"><strong>NVIDIA NIM:</strong> LLM-driven credit risk
+                                reasoning.</li>
+                            <li class="fragment fade-right"><strong>Dynamic Tooling:</strong> Real-time financial data
+                                retrieval.</li>
+                            <li class="fragment fade-right"><strong>Instant Approval:</strong> Just-In-Time financing
+                                triggers.</li>
                         </ul>
                     </div>
                     <div class="fragment zoom-in">
                         <!-- Placeholder for Architecture Diagram -->
                         <div style="border: 2px dashed var(--primary-color); padding: 40px; border-radius: 10px;">
-                            <img src="docs/images/diagram_2.svg" alt="Architecture" style="width: 100%; filter: drop-shadow(0 0 10px var(--primary-color));">
+                            <img src="diagram_2.svg" alt="Architecture"
+                                style="width: 100%; filter: drop-shadow(0 0 10px var(--primary-color));">
                         </div>
                     </div>
                 </div>
@@ -184,10 +219,12 @@
                     <iframe src="https://industrial-jit-financing-agent.streamlit.app/?embed=true"></iframe>
                 </div>
                 <p style="font-size: 0.4em; color: #888; margin-top: 10px;">
-                    Watch: <span class="accent">Autonomous Scan</span> → <span class="accent">Risk Analysis</span> → <span class="accent">HITL Approval</span>
+                    Watch: <span class="accent">Autonomous Scan</span> → <span class="accent">Risk Analysis</span> →
+                    <span class="accent">HITL Approval</span>
                 </p>
                 <p style="font-size: 0.35em; color: #ff4b4b; margin-top: 5px; font-style: italic;">
-                    💡 Note: This webpage is deployed on Streamlit Cloud. It may "sleep" if inactive for over 3 days. Please wake it up if the iframe does not load.
+                    💡 Note: This webpage is deployed on Streamlit Cloud. It may "sleep" if inactive for over 3 days.
+                    Please wake it up if the iframe does not load.
                 </p>
             </section>
 
@@ -239,8 +276,11 @@
                 <h2 style="color: black;">The Future of Manufacturing</h2>
                 <h3 style="color: #000; opacity: 0.8;">JIT Credit = JIT Production</h3>
                 <div style="margin-top: 40px; font-size: 0.5em; color: black;">
-                    <a href="https://github.com/JungluChen/Industrial-JIT-Financing-Agent/tree/main" style="color: #000; text-decoration: none; margin-right: 20px; border-bottom: 2px solid #000;">📂 GitHub Source</a>
-                    <a href="https://industrial-jit-financing-agent.streamlit.app/" style="color: #000; text-decoration: none; border-bottom: 2px solid #000;">🚀 Streamlit App</a>
+                    <a href="https://github.com/JungluChen/Industrial-JIT-Financing-Agent/tree/main"
+                        style="color: #000; text-decoration: none; margin-right: 20px; border-bottom: 2px solid #000;">📂
+                        GitHub Source</a>
+                    <a href="https://industrial-jit-financing-agent.streamlit.app/"
+                        style="color: #000; text-decoration: none; border-bottom: 2px solid #000;">🚀 Streamlit App</a>
                 </div>
                 <p style="color: black; font-weight: bold; margin-top: 50px;">
                     Let's eliminate the friction.
@@ -262,22 +302,22 @@
             autoPlayMedia: true,
             fragmentInURL: true,
             // Learn about self-hosted plugins at: https://revealjs.com/plugins/
-            plugins: [ ]
+            plugins: []
         });
 
         // Particle Background Logic
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        
+
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        
+
         window.addEventListener('resize', resize);
         resize();
-        
+
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -299,9 +339,9 @@
                 ctx.fill();
             }
         }
-        
+
         for (let i = 0; i < 100; i++) particles.push(new Particle());
-        
+
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
@@ -313,4 +353,5 @@
         animate();
     </script>
 </body>
+
 </html>
