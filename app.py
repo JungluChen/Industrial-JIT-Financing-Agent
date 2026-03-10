@@ -521,10 +521,11 @@ if os.path.exists(pdf_path):
         mime="application/pdf"
     )
     
-    st.markdown("*(Note: Interactive PDF preview below may be blocked by your browser's security settings when hosted on Streamlit Cloud. Please use the download button above to view it.)*")
+    st.markdown("*(Note: If the PDF does not load below, please use the download button above.)*")
 
-    base64_pdf = base64.b64encode(pdf_bytes).decode('utf-8')
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    from streamlit_pdf_viewer import pdf_viewer
+    
+    # Use the streamlit-pdf-viewer component which avoids the Chrome iframe sandbox issue
+    pdf_viewer(pdf_bytes, width=800, render_text=True)
 else:
     st.warning("PDF document not found. Please ensure Industrial_Credit_Agent_Flow.pdf exists in the repository.")
