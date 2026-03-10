@@ -505,3 +505,16 @@ if os.path.exists(video_path):
     st.video(video_bytes)
 else:
     st.warning("Video tutorial file not found. Please ensure video.mp4 exists in the repository.")
+
+st.subheader("7. Document")
+PDFpath=r"Industrial_Credit_Agent_Flow.pdf"
+
+import base64
+pdf_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), PDFpath)
+if os.path.exists(pdf_path):
+    with open(pdf_path, "rb") as f:
+        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>'
+    st.markdown(pdf_display, unsafe_allow_html=True)
+else:
+    st.warning("Document file not found. Please ensure Industrial_Credit_Agent_Flow.pdf exists in the repository.")
