@@ -7,6 +7,9 @@
 
 **Just-In-Time (JIT) Financing for the Modern Supply Chain.**
 
+**Slides:** [https://jungluchen.github.io/Industrial-JIT-Financing-Agent/](https://jungluchen.github.io/Industrial-JIT-Financing-Agent/)  
+**Live Demo:** [https://industrial-jit-financing-agent.streamlit.app/](https://industrial-jit-financing-agent.streamlit.app/)
+
 ---
 
 ## 📖 Project Overview
@@ -89,7 +92,7 @@ graph TD
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/JungluChen/Industrial-JIT-Financing-Agent.git
+git clone https://github.com/your-repo/industrial_credit_agent.git
 cd industrial_credit_agent
 ```
 
